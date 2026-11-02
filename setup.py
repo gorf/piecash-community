@@ -212,7 +212,8 @@ install_requires = [
     "click",
 ]
 extras_require = {
-    "postgres": ["psycopg2-binary"],
+    # SQLAlchemy 2.1+ uses psycopg (v3) for "postgresql://" URLs; older versions use psycopg2
+    "postgres": ["psycopg2-binary", "psycopg[binary]"],
     "mysql": ["PyMySQL[rsa]"],
     "ledger": ["money", "babel"],
     "pandas": ["pandas"],

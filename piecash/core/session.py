@@ -25,6 +25,11 @@ def _make_session(bind):
         # SA 2.x: future mode is the only mode (no future= kwarg)
         return Session(bind=bind)
 
+
+def _skip_inline_create(compiler):
+    """Constraint create rule that keeps the constraint out of CREATE TABLE."""
+    return False
+
 # version of tables changed between 2.6 and 3.0
 #   ('invoices', 4)
 #   ('prices', 3)
@@ -323,6 +328,8 @@ def create_book(
                     continue
                 else:
                     event.listen(tbl, "before_drop", DropConstraint(cstr), once=True)
+                    # SQLAlchemy < 2.1 did this implicitly in DropConstraint()
+                    cstr._create_rule = _skip_inline_create
     #
     # create all (tables, fk, ...)
     DeclarativeBase.metadata.create_all(engine)

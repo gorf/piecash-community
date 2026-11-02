@@ -6,6 +6,7 @@ import sys
 from contextlib import contextmanager
 
 import pytest
+from sqlalchemy.engine.url import make_url
 
 
 from piecash import create_book, Account, open_book
@@ -33,7 +34,8 @@ class TestSession_create_book(object):
                 name="léviö",
                 type="ASSET",
             )
-            assert str(b.uri) == build_uri(**book_db_config)
+            # str(URL) masks the password (SA 2.0) and escapes the database (SA 2.1)
+            assert b.uri == make_url(build_uri(**book_db_config))
             b.save()
 
         # reopen the DB except if sqlite_file is None
