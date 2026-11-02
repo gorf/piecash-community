@@ -31,6 +31,9 @@ Version 1.2.2 (unreleased)
 - warn and allow inferring default currency when root account has none (fix #251; GnuCash-compatible fallback via first top-level INCOME)
 - splits_df: tolerate splits with missing account instead of crashing (fix #211)
 - Compat: allow registry() without _bind for SQLAlchemy 2.0
+- remove upper limit on SQLAlchemy version (from PR #3, @atomsmith); require SQLAlchemy >= 1.4
+- Compat: SQLAlchemy 2.1 (keep_foreign_keys=False, psycopg v3 in postgres extra)
+- CI: pin ubuntu-24.04 (ubuntu-latest no longer ships Python 3.8/3.9)
 
 Version 1.2.1 (2024-07-14)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
